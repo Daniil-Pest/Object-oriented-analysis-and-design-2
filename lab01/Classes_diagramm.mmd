@@ -1,0 +1,36 @@
+classDiagram
+	class Form1{
+		+ Form1_Load()
+		+ button1_Click()
+		+ button2_Click()
+	}
+	
+	class Pizza {
+		+ string Size
+		+ string Crust
+		+ bool Sausage
+		+ bool Cheese
+		+ bool Mushrooms
+		+ bool Olives
+		+ Pizza(string size, string crust, bool sausage, bool cheese, bool mushrooms, bool olives)
+	}
+	
+	class PizzaBuilder {
+		− string Size
+		− string Crust
+		− bool Sausage
+		− bool Cheese
+		− bool Mushrooms
+		− bool Olives
+		+ size(string size) PizzaBuilder
+		+ crust(string crust) PizzaBuilder
+		+ sausage(bool sausage) PizzaBuilder
+		+ cheese(bool cheese) PizzaBuilder
+		+ mushrooms(bool mushrooms) PizzaBuilder
+		+ olives(bool olives) PizzaBuilder
+		+ build() Pizza
+	}
+	
+	Form1 --> Pizza : Creates
+	Form1 --> PizzaBuilder : Uses
+	PizzaBuilder --> Pizza : Builds
