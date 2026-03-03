@@ -1,36 +1,75 @@
 classDiagram
-	class Form1{
-		+ Form1_Load()
-		+ button1_Click()
-		+ button2_Click()
-	}
-	
-	class Pizza {
-		+ string Size
-		+ string Crust
-		+ bool Sausage
-		+ bool Cheese
-		+ bool Mushrooms
-		+ bool Olives
-		+ Pizza(string size, string crust, bool sausage, bool cheese, bool mushrooms, bool olives)
-	}
-	
-	class PizzaBuilder {
-		− string Size
-		− string Crust
-		− bool Sausage
-		− bool Cheese
-		− bool Mushrooms
-		− bool Olives
-		+ size(string size) PizzaBuilder
-		+ crust(string crust) PizzaBuilder
-		+ sausage(bool sausage) PizzaBuilder
-		+ cheese(bool cheese) PizzaBuilder
-		+ mushrooms(bool mushrooms) PizzaBuilder
-		+ olives(bool olives) PizzaBuilder
-		+ build() Pizza
-	}
-	
-	Form1 --> Pizza : Creates
-	Form1 --> PizzaBuilder : Uses
-	PizzaBuilder --> Pizza : Builds
+    class Form1 {
+        + Form1()
+        + Form1_Load(sender: object, e: EventArgs) void
+        + button1_Click(sender: object, e: EventArgs) void
+        + button2_Click(sender: object, e: EventArgs) void
+    }
+
+    class Size {
+        + string size
+    }
+
+    class Crust {
+        + string crust
+    }
+
+    class Sausage {
+        + bool sausage
+    }
+
+    class Cheese {
+        + bool cheese
+    }
+
+    class Mushrooms {
+        + bool mushrooms
+    }
+
+    class Olives {
+        + bool olives
+    }
+
+    class Pizza {
+        + Size size
+        + Crust crust
+        + Sausage sausage
+        + Cheese cheese
+        + Mushrooms mushrooms
+        + Olives olives
+        + ToString() string
+    }
+
+    class PizzaBuilder {
+        <<abstract>>
+        + Pizza pizza
+        + BuildPizza() void
+        + Size(size: string) void
+        + Crust(crust: string) void
+        + Sausage(sausage: bool) void
+        + Cheese(cheese: bool) void
+        + Mushrooms(mushrooms: bool) void
+        + Olives(olives: bool) void
+    }
+
+    class ThePizzaBuilder {
+        + Size(size: string) void
+        + Crust(crust: string) void
+        + Sausage(sausage: bool) void
+        + Cheese(cheese: bool) void
+        + Mushrooms(mushrooms: bool) void
+        + Olives(olives: bool) void
+    }
+
+    class Baker {
+        + Bake(pizzaBuilder: PizzaBuilder, size: string, crust: string, sausage: bool, cheese: bool, mushrooms: bool, olives: bool) Pizza
+    }
+
+    Pizza "1" *-- "1" Size
+    Pizza "1" *-- "1" Crust
+    Pizza "1" *-- "1" Sausage
+    Pizza "1" *-- "1" Cheese
+    Pizza "1" *-- "1" Mushrooms
+    Pizza "1" *-- "1" Olives
+    PizzaBuilder <|-- ThePizzaBuilder
+    Baker --> PizzaBuilder : uses
