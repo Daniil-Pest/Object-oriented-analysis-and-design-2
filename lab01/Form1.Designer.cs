@@ -182,7 +182,7 @@
             this.Controls.Add(this.richTextBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
-            this.Text = "Лабораторная работа 1. Паттерн-строитель";
+            this.Text = "Лабораторная работа 1. Шаблон-строитель";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
