@@ -97,13 +97,13 @@ namespace lab01
 		
 		class Baker
 		{
-			public Pizza Bake(PizzaBuilder pizzaBuilder,
-							string size,
-							string crust,
-							bool sausage,
-							bool cheese,
-							bool mushrooms,
-							bool olives)
+			public Pizza Bake	(PizzaBuilder pizzaBuilder,
+								string size,
+								string crust,
+								bool sausage,
+								bool cheese,
+								bool mushrooms,
+								bool olives)
 			{
 				pizzaBuilder.BuildPizza();
 				
@@ -138,14 +138,15 @@ namespace lab01
 			Baker baker = new Baker();
 			PizzaBuilder builder = new ThePizzaBuilder();
 			Pizza pizza = baker.Bake(builder,
-								comboBox1.Text,
-								comboBox2.Text,
-								checkBox1.Checked,
-								checkBox2.Checked,
-								checkBox3.Checked,
-								checkBox4.Checked);
+									comboBox1.Text,
+									comboBox2.Text,
+									checkBox1.Checked,
+									checkBox2.Checked,
+									checkBox3.Checked,
+									checkBox4.Checked);
 			
 			richTextBox1.Text += "Строитель: объект класса Pizza создан с " + pizza.ToString() + ".\n";
 		}
 	}
 }
+
