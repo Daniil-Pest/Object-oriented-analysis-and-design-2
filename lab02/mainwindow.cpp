@@ -1,0 +1,226 @@
+#include "mainwindow.h"
+#include "./ui_mainwindow.h"
+
+#include <iostream>
+#include <string>
+#include <memory>
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+// Базовый интерфейс Component
+class Coffee
+{
+public:
+    virtual double cost() const = 0;
+    virtual ~Coffee() = default;
+};
+
+// Конкретная реализация Component
+class SimpleCoffee : public Coffee
+{
+public:
+    double cost() const override
+    {
+        return 1.0; // Базовая стоимость кофе
+    }
+};
+
+// Абстрактный декоратор
+class CoffeeDecorator : public Coffee
+{
+protected: std::unique_ptr<Coffee> coffee;
+public:
+    CoffeeDecorator(std::unique_ptr<Coffee> coffee) : coffee(std::move(coffee)) {}
+    double cost() const override = 0;
+};
+
+// Конкретный декоратор для добавления молока
+class MilkDecorator : public CoffeeDecorator
+{
+public:
+    MilkDecorator(std::unique_ptr<Coffee> coffee) : CoffeeDecorator(std::move(coffee)) {}
+    double cost() const override
+    {
+        return coffee->cost() + 0.5; // Добавление стоимости молока
+    }
+};
+
+// Конкретный декоратор для добавления сахара
+class SugarDecorator : public CoffeeDecorator
+{
+public:
+    SugarDecorator(std::unique_ptr<Coffee> coffee) : CoffeeDecorator(std::move(coffee)) {}
+    double cost() const override
+    {
+        return coffee->cost() + 0.2; // Добавление стоимости сахара
+    }
+};
+
+class Brewer
+{
+public:
+    virtual void brew(const std::string &coffee) = 0;
+    virtual ~Brewer() = default;
+};
+
+class LatteBrewer : public Brewer
+{
+public:
+    void brew(const std::string &coffee) override
+    {
+    }
+};
+
+class CappuccinoBrewer : public Brewer
+{
+public:
+    void brew(const std::string &coffee) override
+    {
+    }
+};
+
+class MilkLatteBrewer : public Brewer
+{
+public:
+    void brew(const std::string &coffee) override
+    {
+        std::string milkCoffee = "Milk: " + coffee;
+    }
+};
+
+class MilkCappuccinoBrewer : public Brewer
+{
+public:
+    void brew(const std::string &coffee) override
+    {
+        std::string milkCoffee = "Milk: " + coffee;
+    }
+};
+
+class SugarLatteBrewer : public Brewer
+{
+public:
+    void brew(const std::string &coffee) override
+    {
+    }
+};
+
+class SugarCappuccinoBrewer : public Brewer
+{
+public:
+    void brew(const std::string &coffee) override
+    {
+    }
+};
+
+// Базовый интерфейс Компонента определяет поведение, изменяемое декораторами
+class Component {
+public:
+    virtual ~Component() {}
+    virtual std::string Operation() const = 0;
+};
+
+// Конкретные Компоненты предоставляют реализации поведения по умолчанию. Может быть несколько вариаций этих классов
+class ConcreteComponent : public Component {
+public:
+    std::string Operation() const override {
+        return "ConcreteComponent";
+    }
+};
+
+// Базовый класс Декоратора следует тому же интерфейсу, что и другие компоненты. Основная цель этого класса — определить интерфейс обёртки для всех конкретных декораторов
+// Реализация кода обёртки по умолчанию может включать в себя поле для хранения завёрнутого компонента и средства его инициализации
+class Decorator : public Component {
+    /**
+     * @var Component
+     */
+protected:
+    Component* component_;
+
+public:
+    Decorator(Component* component) : component_(component) {
+    }
+    // Декоратор делегирует всю работу обёрнутому компоненту
+    std::string Operation() const override {
+        return this->component_->Operation();
+    }
+};
+
+// Конкретные Декораторы вызывают обёрнутый объект и изменяют его результат некоторым образом
+class ConcreteDecoratorA : public Decorator {
+// Декораторы могут вызывать родительскую реализацию операции, а не обёрнутый объект напрямую. Такой подход упрощает расширение классов декораторов
+public:
+    ConcreteDecoratorA(Component* component) : Decorator(component) {
+    }
+    std::string Operation() const override {
+        return "ConcreteDecoratorA(" + Decorator::Operation() + ")";
+    }
+};
+
+// Декораторы могут выполнять своё поведение до или после вызова обёрнутого объекта
+class ConcreteDecoratorB : public Decorator {
+public:
+    ConcreteDecoratorB(Component* component) : Decorator(component) {
+    }
+
+    std::string Operation() const override {
+        return "ConcreteDecoratorB(" + Decorator::Operation() + ")";
+    }
+};
+
+// Клиентский код работает со всеми объектами, используя интерфейс Компонента. Таким образом, он остаётся независимым от конкретных классов компонентов
+void ClientCode(Component* component) {
+    std::cout << "RESULT: " << component->Operation();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    std::unique_ptr<Brewer> latteBrewer = std::make_unique<LatteBrewer>();
+    latteBrewer->brew("Latte.");
+    ui->textBrowser_2->insertPlainText("Latte.\n");
+
+    std::unique_ptr<Brewer> cappuccinoBrewer = std::make_unique<CappuccinoBrewer>();
+    cappuccinoBrewer->brew("Cappuccino.");
+    ui->textBrowser_2->insertPlainText("Cappuccino.\n");
+
+    std::unique_ptr<Brewer> milkLatteBrewer = std::make_unique<MilkLatteBrewer>();
+    milkLatteBrewer->brew("Secret coffee (latte).");
+    ui->textBrowser_2->insertPlainText("Secret coffee (latte).\n");
+
+    std::unique_ptr<Brewer> milkCappuccinoBrewer = std::make_unique<MilkCappuccinoBrewer>();
+    milkCappuccinoBrewer->brew("Secret coffee (cappuccino).");
+    ui->textBrowser_2->insertPlainText("Secret coffee (cappuccino).\n");
+
+    std::unique_ptr<Brewer> sugarLatteBrewer = std::make_unique<SugarLatteBrewer>();
+    sugarLatteBrewer->brew("Sugar coffee (latte).");
+    ui->textBrowser_2->insertPlainText("Sugar coffee (latte):.\n");
+
+    std::unique_ptr<Brewer> sugarCappuccinoBrewer = std::make_unique<SugarCappuccinoBrewer>();
+    sugarCappuccinoBrewer->brew("Sugar coffee (cappuccino).");
+    ui->textBrowser_2->insertPlainText("Sugar coffee (cappuccino).\n");
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    // Простой кофе
+    std::unique_ptr<Coffee> coffee = std::make_unique<SimpleCoffee>();
+    ui->textBrowser->insertPlainText("Simple coffee cost: " + QString::number(coffee->cost()) + "\n");
+
+    // Молоко
+    coffee = std::make_unique<MilkDecorator>(std::move(coffee));
+    ui->textBrowser->insertPlainText("Milk coffee cost: " + QString::number(coffee->cost()) + "\n");
+
+    // Сахар
+    coffee = std::make_unique<SugarDecorator>(std::move(coffee));
+    ui->textBrowser->insertPlainText("Milk-sugar coffee cost: " + QString::number(coffee->cost()) + "\n");
+}
