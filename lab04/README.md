@@ -17,7 +17,7 @@
 - java -cp .:sqlite-jdbc-3.53.1.0.jar DirectAccessApp
 - java -cp .:sqlite-jdbc-3.53.1.0.jar Main
 
-*Диаграммы классов на UML*:
+## Диаграммы классов на UML
 
 ![](https://github.com/Daniil-Pest/Object-oriented-analysis-and-design-2/blob/main/lab04/no_pattern/no_pattern.png)
 ![](https://github.com/Daniil-Pest/Object-oriented-analysis-and-design-2/blob/main/lab04/pattern/pattern.png)
