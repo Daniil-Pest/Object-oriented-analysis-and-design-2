@@ -1,68 +1,59 @@
-from __future__ import annotations
-from abc import ABC
+from abc import ABC, abstractmethod
 
-# Интерфейс посредника предоставляет метод, используемый компонентами для его уведомления о событиях
-# Посредник может реагировать на эти события, передавая исполнение другим компонентам
+# Интерфейс посредника
 class Mediator(ABC):
-    def notify(self, sender: object, event: str) -> None:
+    @abstractmethod
+    def send_message(self, message: str, user: 'ChatUser'):
         pass
 
-class ConcreteMediator(Mediator):
-    def __init__(self, component1: Component1, component2: Component2) -> None:
-        self._component1 = component1
-        self._component1.mediator = self
-        self._component2 = component2
-        self._component2.mediator = self
+# Конкретный посредник (чат-сервер)
+class ChatMediator(Mediator):
+    def __init__(self):
+        self.users = []
 
-    def notify(self, sender: object, event: str) -> None:
-        if event == "A":
-            print("Mediator reacts on A and triggers following operations:")
-            self._component2.do_c()
-        elif event == "D":
-            print("Mediator reacts on D and triggers following operations:")
-            self._component1.do_b()
-            self._component2.do_c()
+    def add_user(self, user: 'ChatUser'):
+        self.users.append(user)
 
-# Базовый компонент обеспечивает шаблон функциональности для хранения экземпляра посредника внутри объектов компонента
-class BaseComponent:
-    def __init__(self, mediator: Mediator = None) -> None:
-        self._mediator = mediator
+    def send_message(self, message: str, sender: 'ChatUser'):
+        for user in self.users:
+            if user != sender:
+                user.receive_message(message)
 
-    @property
-    def mediator(self) -> Mediator:
-        return self._mediator
+# Интерфейс пользователя
+class ChatUser(ABC):
+    def __init__(self, mediator: Mediator):
+        self.mediator = mediator
 
-    @mediator.setter
-    def mediator(self, mediator: Mediator) -> None:
-        self._mediator = mediator
+    @abstractmethod
+    def send_message(self, message: str):
+        pass
 
-# Конкретные компоненты реализуют различную функциональность, не завися от других компонентов и конкретных классов посредника
-class Component1(BaseComponent):
-    def do_a(self) -> None:
-        print("Component 1 does A.")
-        self.mediator.notify(self, "A")
+    @abstractmethod
+    def receive_message(self, message: str):
+        pass
 
-    def do_b(self) -> None:
-        print("Component 1 does B.")
-        self.mediator.notify(self, "B")
+# Конкретный пользователь
+class ConcreteUser(ChatUser):
+    def __init__(self, name: str, mediator: Mediator):
+        super().__init__(mediator)
+        self.name = name
+        mediator.add_user(self)
 
-class Component2(BaseComponent):
-    def do_c(self) -> None:
-        print("Component 2 does C.")
-        self.mediator.notify(self, "C")
+    def send_message(self, message: str):
+        print(f"{self.name} отправляет сообщение: {message}")
+        self.mediator.send_message(message, self)
 
-    def do_d(self) -> None:
-        print("Component 2 does D.")
-        self.mediator.notify(self, "D")
+    def receive_message(self, message: str):
+        print(f"{self.name} получил сообщение: {message}")
 
-# Клиентский код
+# Пример использования
 if __name__ == "__main__":
-    c1 = Component1()
-    c2 = Component2()
-    mediator = ConcreteMediator(c1, c2)
+    mediator = ChatMediator()
 
-    print("Client triggers operation A.")
-    c1.do_a()
+    user1 = ConcreteUser("Алиса", mediator)
+    user2 = ConcreteUser("Боб", mediator)
+    user3 = ConcreteUser("Чарли", mediator)
 
-    print("Client triggers operation D.")
-    c2.do_d()
+    user1.send_message("Привет, Боб.")
+    user2.send_message("Привет, Алиса.")
+    user3.send_message("Привет всем.")
