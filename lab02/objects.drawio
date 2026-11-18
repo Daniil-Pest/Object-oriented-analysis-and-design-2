@@ -1,0 +1,55 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Coffee Objects" id="coffee-objects">
+    <mxGraphModel dx="1178" dy="618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="650" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fontSize=12;fontStyle=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="mainWindow : MainWindow&#xa;&#xa;ui = (ссылка на ui)" vertex="1">
+          <mxGeometry height="70" width="240" x="100" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="rounded=0;whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fillColor=#f5f5f5;strokeColor=#666666;" value="ui : Ui::MainWindow" vertex="1">
+          <mxGeometry height="50" width="240" x="420" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fontSize=12;fontStyle=0;fillColor=#fff2cc;strokeColor=#d6b656;" value="sugar : SugarDecorator&#xa;&#xa;coffee = (milk)" vertex="1">
+          <mxGeometry height="70" width="240" x="110" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="rounded=0;whiteSpace=wrap;html=0;align=left;verticalAlign=top;spacingLeft=8;spacingTop=6;fontSize=12;fontStyle=0;fillColor=#fff2cc;strokeColor=#d6b656;" value="milk : MilkDecorator&#xa;&#xa;coffee = (simple)" vertex="1">
+          <mxGeometry height="70" width="240" x="420" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="rounded=0;whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fillColor=#fff2cc;strokeColor=#d6b656;" value="simple : SimpleCoffee" vertex="1">
+          <mxGeometry height="50" width="240" x="740" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="rounded=0;whiteSpace=wrap;html=0;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;" value="brewer : MilkCappuccinoBrewer" vertex="1">
+          <mxGeometry height="50" width="240" x="420" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="2" style="endArrow=none;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" target="3" value="ui">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="4" style="endArrow=open;endFill=0;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" target="5" value="coffee">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="5" style="endArrow=open;endFill=0;html=1;rounded=0;fontSize=11;labelBackgroundColor=#ffffff;" target="6" value="coffee">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="l5xk_Eb-rWZmoLzG5Sui-9" edge="1" parent="1" source="2" style="endArrow=none;html=1;rounded=0;defaultLabelBackgroundColor=page;labelPadding=0 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="580" y="290" as="sourcePoint" />
+            <mxPoint x="630" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l5xk_Eb-rWZmoLzG5Sui-10" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;defaultLabelBackgroundColor=page;labelPadding=0 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="110" y="285" as="sourcePoint" />
+            <mxPoint x="350" y="285" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l5xk_Eb-rWZmoLzG5Sui-11" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;defaultLabelBackgroundColor=page;labelPadding=0 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="420" y="285" as="sourcePoint" />
+            <mxPoint x="660" y="285" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
